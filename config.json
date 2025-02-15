@@ -1,0 +1,14 @@
+{
+    "text_watermark": "THE REDEEMEED CHRISTIAN \n          CHURCH OF GODaa",
+    "font_size": 55,
+    "text_color": [
+        1,
+        0.30000000000000004,
+        0.5625,
+        1
+    ],
+    "logo_opacity": 1.0,
+    "logo_path": "( 0 )",
+    "use_text_watermark": false,
+    "use_logo_watermark": true
+}

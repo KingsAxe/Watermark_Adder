@@ -1,0 +1,53 @@
+
+
+
+
+<AQScreen>:
+    name: 'home'
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "10dp"
+
+        MDTopAppBar:
+            title: "Watermark Configuration"
+            # left_action_items: [["arrow-left", lambda x: app.root.current = "home"]]
+            # right_action_items: [["dots-vertical", lambda x: print("Menu clicked")]]
+        
+        ScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: "100dp"
+                adaptive_height: True  # Ensures content does not overlap
+                md_bg_color: app.theme_cls.surfaceColor
+
+                MDExpansionPanel:
+                    id: logo_panel
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+
+                    MDExpansionPanelHeader:
+                        text: "Logo Settings"
+                        spacing: "10dp"
+                        adaptive_height: True
+                        MDLabel:
+                            text: "Supporting text"
+                            adaptive_height: True
+                        MDIconButton:
+                            id: chevron
+                            icon: "chevron-right"
+                            on_release: app.tap_expansion_chevron(logo_panel, chevron)
+
+                    MDExpansionPanelContent:
+                        orientation: "vertical"
+                        padding: "12dp"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+                        MDLabel:
+                            text: "Expanded content goes here."
+                            adaptive_height: True
+                Widget:

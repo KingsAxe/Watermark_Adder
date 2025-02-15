@@ -1,0 +1,412 @@
+
+<CustomMDDivider@MDDivider>:
+    height: "1dp"
+    md_bg_color: app.theme_cls.surfaceColor
+    # padding: "20dp"
+
+<CustomMDExpansionPanel>
+
+<ConfigScreen>:
+    name: 'config'
+    md_bg_color: app.theme_cls.surfaceColor
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        MDTopAppBar:
+            type: "small"
+            md_bg_color: app.theme_cls.primaryColor
+
+            MDTopAppBarLeadingButtonContainer:
+
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: root.return_home()
+
+            MDTopAppBarTitle:
+                text: "Watermark"
+                pos_hint: {"center_x": .5}
+
+            MDTopAppBarTrailingButtonContainer:
+
+                MDActionTopAppBarButton:
+                    icon: "dots-vertical"
+                    on_release: root.navmenu_settings(self)
+
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True
+                spacing: "20dp"
+                MDTextField:
+                    id: text_watermark_input
+                    hint_text: "Enter Text Watermark"
+                    on_text: root.update_preview(text_watermark_input.text)
+                    multiline: True
+
+                MDLabel:
+                    id: watermark_preview
+                    text: ""
+                    adaptive_size: True
+                    pos_hint: {"center_x": .5}
+                    text_style: "H6"
+
+                CustomMDExpansionPanel:
+                    id: logo_panel
+                    # pos_hint: {"center_x": .5, "center_y": .5}
+                    MDExpansionPanelHeader:
+                        text: "Logo Settings"
+                        MDListItem:
+                            theme_bg_color: "Custom"
+                            md_bg_color: self.theme_cls.surfaceContainerLowColor
+                            ripple_effect: False
+                            on_release: app.tap_expansion_chevron(logo_panel, logo_chevron)
+
+                            MDListItemLeadingIcon:
+                                id: leading_logo_icon
+                                icon: "image-broken"
+
+                            MDListItemSupportingText:
+                                text: "Logo Watermark"
+
+                            TrailingPressedIconButton:
+                                id: logo_chevron
+                                icon: "chevron-right"
+                                # on_release: app.tap_expansion_chevron(logo_panel, chevron)
+
+                    MDExpansionPanelContent:
+                        orientation: "vertical"
+                        padding: "12dp", 0, "12dp", "12dp"
+                        md_bg_color: self.theme_cls.surfaceContainerLowestColor
+                        # spacing: "10dp"
+
+
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "2dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDLabel:
+                                    text: "Logo Watermark"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDCheckbox:
+                                    id: logo_watermark_checkbox
+                                    active: False
+
+                        CustomMDDivider:
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            # spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDLabel:
+                                    text: "Logo Opacity:"
+                                    # size_hint_x: .6
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDBoxLayout:
+                                    MDSlider:
+                                        step: 10
+                                        value: 50
+                                        MDSliderValueLabel:
+                                            id: logo_opacity_slider
+
+                                        MDSliderHandle:
+                                            id: logo_opacity_slider
+
+                                    # min: 0
+                                    # max: 1
+                                    # value: 1
+                                    # step: 0.01
+
+                        CustomMDDivider:
+                        MDStackLayout:
+                            orientation: 'lr-tb'
+                            # spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                size_hint_x: .300
+                                MDLabel:
+                                    text: "Logo's selected:"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'center'
+                                anchor_y: 'center'
+                                size_hint_x: .133
+                                MDLabel:
+                                    id: logo_path_label
+                                    text: "( 0 )"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                size_hint_x: .566
+                                MDButton:
+                                    style: "elevated"
+
+                                    theme_shadow_color: "Custom"
+                                    shadow_color: "grey"
+                                    on_press: root.choose_logo()
+
+                                    MDButtonIcon:
+                                        icon: "plus"
+                                        # icon: "plus-box-multiple-outline"
+                                        theme_icon_color: "Custom"
+                                        icon_color: "white"
+
+                                    MDButtonText:
+                                        text: "Pick Logo"
+                                        theme_text_color: "Custom"
+                                        text_color: "grey"
+
+
+                        CustomMDDivider:
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDLabel:
+                                    text: "Select Logo Position"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDDropDownItem:
+                                    pos_hint: {"center_x": .5}
+                                    on_release: app.logomenu_callback(self)
+
+                                    MDDropDownItemText:
+                                        id: logo_position_spinner
+                                        text: "Bottom-Right"
+                                # Spinner:
+                                #     id: logo_position_spinner
+                                #     text: "Bottom-Right"
+                                #     values: ["Top-Left", "Top-Right", "Center", "Bottom-Left", "Bottom-Right"]
+
+
+
+                CustomMDExpansionPanel:
+                    id: text_panel
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    spacing: '10dp'
+
+                    MDExpansionPanelHeader:
+                        text: "Text Settings"
+                        MDListItem:
+                            theme_bg_color: "Custom"
+                            md_bg_color: self.theme_cls.surfaceContainerLowColor
+                            ripple_effect: False
+                            on_release: app.tap_expansion_chevron(text_panel, text_chevron)
+
+                            MDListItemLeadingIcon:
+                                id: leading_text_icon
+                                icon: "text-recognition"
+
+                            MDListItemSupportingText:
+                                text: "Text Watermark"
+
+                            TrailingPressedIconButton:
+                                id: text_chevron
+                                icon: "chevron-right"
+                                on_release: app.tap_expansion_chevron(text_panel, text_chevron)
+
+
+                    MDExpansionPanelContent:
+                        orientation: "vertical"
+                        padding: "12dp"
+                        md_bg_color: self.theme_cls.surfaceContainerLowestColor
+
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                MDLabel:
+                                    text: "Text Watermark"
+                            
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                MDCheckbox:
+                                    id: text_watermark_checkbox
+                                    active: True
+                        CustomMDDivider:
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                MDLabel:
+                                    text: "Font Size:"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                MDBoxLayout:
+                                    # MDSliderHandle:
+                                    # MDSliderValueLabel:
+                                    id: font_size_slider
+                                    # min: 10
+                                    # max: 72
+                                    # value: 24
+                                    # step: 1
+                                    # on_value: root.update_font_size(self.value)
+                        CustomMDDivider:
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                MDLabel:
+                                    text: "Text Color:"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                MDButton:
+                                    style: "elevated"
+                                    on_press: root.open_color_picker()
+
+                                    MDButtonIcon:
+                                        id: color_picker_icon
+                                        icon: "palette"
+
+                                    MDButtonText:
+                                        id: color_picker_text
+                                        text: "Pick Color"
+
+
+
+                        CustomMDDivider:
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            spacing: "10dp"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'left'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDLabel:
+                                    text: "Select Text Position"
+                            MDAnchorLayout:
+                                # orientation: 'horizontal'
+                                anchor_x: 'right'
+                                anchor_y: 'center'
+                                size_hint_x: .5
+                                MDDropDownItem:
+                                    pos_hint: {"center_x": .5}
+                                    on_release: app.textmenu_callback(self)
+
+                                    MDDropDownItemText:
+                                        id: text_position_spinner
+                                        text: "Bottom-Right"
+
+
+                MDListItem:
+                    on_release: root.select_images()
+
+                    MDListItemLeadingIcon:
+                        id: leading_select_image_icon
+                        icon: "image-multiple"
+
+                    MDListItemHeadlineText:
+                        text: "Select Image(s)"
+                        bold: False
+
+                MDListItem:
+                    on_press: root.select_folder()
+
+                    MDListItemLeadingIcon:
+                        id: leading_select_folder_icon
+                        icon: "folder"
+
+                    MDListItemHeadlineText:
+                        text: "Select Folder"
+                        bold: False
+
+                # MDButton:
+                #     style: "elevated"
+                #     on_press: root.select_images()
+
+                #     MDButtonIcon:
+                #         icon: "image"
+                #     MDButtonText:
+                #         text: "Select Image(s)"
+
+                # MDButton:
+                #     style: "text"
+                #     on_press: root.select_folder()
+
+                #     MDButtonIcon:
+                #         icon: "folder"
+                #     MDButtonText:
+                #         text: "Select Folder"
+
+                # MDBoxLayout:
+                #     orientation: 'horizontal'
+                #     spacing: "20dp"
+                #     padding: "10dp"
+                #     pos_hint: {'center_x': 0.5}
+
+                # MDButton:
+                #     style: "elevated"
+                #     on_press: root.apply_watermark()
+
+                #     MDButtonIcon:
+                #         icon: "watermark"
+                #     MDButtonText:
+                #         text: "Apply Watermark"
+        # MDFabButton:
+        #     icon: "pencil-outline"
+        #     style: "small"
+        MDAnchorLayout:
+            anchor_x: 'right'    
+            anchor_y: 'center' 
+            size_hint_y: None
+            # size_hint_x: None
+            MDExtendedFabButton:
+                id: btn
+                fab_state: "expand"
+                # pos_hint: {"x": .75, "center_y": .5}
+                size_hint: None, None
+                on_press: root.apply_watermark()
+
+                MDExtendedFabButtonIcon:
+                    # icon: "watermark"
+                    id: extendedfab_apply_watermark_icon
+                    icon: "watermark"
+                    # icon: "file-table-box-multiple-outline"
+
+                MDExtendedFabButtonText:
+                    id: extendedfab_apply_watermark_text
+                    text: "Apply Watermark"
+
+

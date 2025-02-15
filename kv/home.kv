@@ -1,0 +1,32 @@
+<HomeScreen>:  # The name must match the class name in home.py
+    name: 'home'  # Still important for ScreenManager
+    MDBoxLayout:  # Use KivyMD layouts (MDBoxLayout, MDFloatLayout, etc.)
+        orientation: 'vertical'  # Example: vertical layout
+        padding: "20dp"
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Watermark App"
+            halign: "center"
+            font_size: "32sp"
+
+        # MDRaisedButton:
+        #     pos_hint: {'center_x': 0.5}  # Center the button
+    
+        MDButton:
+            style: "elevated"
+            on_press: root.manager.transition.direction = 'left'  # Navigate to 'config' screen
+            on_press: root.manager.current = 'config'  # Navigate to 'config' screen
+            # on_press: root.open_color_picker()
+
+            MDButtonIcon:
+                icon: "palette"
+
+            MDButtonText:
+                text: "Start Watermark Configuration"
+                # text: "Pick Color"
+
+
+        MDLabel:
+            text: "A simple app for adding watermarks to images."
+            halign: "center"
